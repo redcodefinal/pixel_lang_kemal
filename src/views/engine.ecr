@@ -1,0 +1,32 @@
+<html>
+  <head>
+    <title>pixel_lang engine, <%= engine.name %></title>
+    <style>
+      table td a {
+        display: block;
+        height: 100%;        
+        width: 100%;
+      }
+    </style>
+  </head>
+  <body>
+    <a href="/">Home</a>
+    <br>
+    <table border="1">
+      <% (0...engine.instructions.height).each do |y| %>
+        <tr>
+          <% (0...engine.instructions.width).each do |x| %>
+            <% color = "##{engine.instructions[x, y].value.to_int_hex[2...8]}" %>
+            <td bgcolor="<%= color %>">
+              <a style="color:<%= color %>" href="/engines/<%= e_id %>/instructions/<%= x %>/<%= y %>">&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp<br><br></a>
+            </td> 
+          <% end %>
+        <tr>
+      <% end %>
+    </table>
+    <a href="/engines/<%= e_id %>/next"> NEXT </a>
+    <br>
+    <br>
+    <%= engine.output %>
+  </body>
+</html>

@@ -1,0 +1,30 @@
+version: 1.0
+shards:
+  colorful:
+    github: icyleaf/colorful.cr
+    version: 0.1.0
+
+  kemal:
+    github: kemalcr/kemal
+    version: 0.19.0
+
+  kilt:
+    github: jeromegn/kilt
+    version: 0.3.3
+
+  pixel_lang_crystal:
+    github: redcodefinal/pixel_lang_crystal
+    commit: 5c11f05abc3ce7716e54ebee6c4680ba2a1a1c3b
+
+  radix:
+    github: luislavena/radix
+    version: 0.3.8
+
+  stumpy_core:
+    git: https://github.com/l3kn/stumpy_core.git
+    commit: 8f9390d3476e19e2a7c0fa6622b2c1092892bfb3
+
+  stumpy_png:
+    github: l3kn/stumpy_png
+    version: 4.1.1
+

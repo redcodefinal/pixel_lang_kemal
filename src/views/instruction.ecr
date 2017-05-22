@@ -1,0 +1,22 @@
+<html>
+  <head>
+    <title>pixel_lang engine, <%= engine.name %>[<%= x %>, <%= y %>]</title>
+  </head>
+  <body>
+    <a href="/">Home</a>
+    <br>
+    <table border="1">
+      <tr>
+        <td> <b>Name</b> </td>
+        <td> <b>Value</b> </td>
+      </tr>
+
+      <% engine.instructions[x, y].info.each do |row| %>
+        <tr>
+          <td><%= row[0] %></td>
+          <td><%= row[1] %></td>          
+        </tr>
+      <% end %>
+    </table>
+  </body>
+</html>

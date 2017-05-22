@@ -1,0 +1,19 @@
+name: pixel_lang_kemal
+version: 0.1.0
+
+authors:
+  - Ian Rash <redcodefinal@gmail.com>
+
+dependencies:
+  kemal:
+    github: kemalcr/kemal
+  pixel_lang_crystal:
+    github: redcodefinal/pixel_lang_crystal
+
+targets:
+  pixel_lang_kemal:
+    main: src/app.cr
+
+crystal: 0.22.0
+
+license: MIT

@@ -1,0 +1,32 @@
+<html>
+  <head>
+    <title>pixel_lang engines</title>
+  </head>
+  <body>
+    <a href="/">Home</a>
+    <br>
+    <table border="1">
+        <tr>
+          <td><b>Name</b></td>
+          <td><b>Cycles</b></td>
+        </tr>
+        <% engines.each_with_index do |e, i| %>
+          <tr>
+            <td><a href="/engines/<%= i %>"><%= e.name %></a></td>
+            <td><%= e.cycles %></td>
+          </tr>
+        <% end %>
+    </table>
+
+    <form action="/engines/new" method="post">
+      <input name="name" type="text"></input>
+      <input name="input" type="text"></input>
+      <select name="program">
+        <% Programs.to_a.each do |program| %>
+          <option value="<%= program %>"><%= program.split('/').last.split('.').first %></option>
+        <% end %>
+      </select>
+      <input type="submit" value="Submit">
+    </form>
+  </body>
+</html>
