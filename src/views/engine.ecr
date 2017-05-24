@@ -7,7 +7,7 @@
         height: 100%;        
         width: 100%;
       }
-      #wrap { width: 600px; height: 390px; padding: 0; overflow: auto; }
+      #wrap { width: 800px; height: 500px; padding: 0; overflow: auto; }
       #zoom {
           -ms-zoom: <%= zoom %>;
           -moz-transform: scale(<%= zoom %>);
@@ -27,7 +27,7 @@
     <br>
     <div id="wrap">
       <div id="zoom">
-        <table border="0">
+        <table border="0" cellspacing="0" cellpadding="0" style="table-layout:fixed">
           <% (0...engine.instructions.height).each do |y| %>
             <tr>
             <% (0...engine.instructions.width).each do |x| %>
@@ -50,14 +50,14 @@
                       <% elsif pistons[0].direction == :right %>
                         <% p_c = ">" %>
                       <% end %>
-                      <a style="color:<%= color %>;text-decoration:none;" href="/engines/<%= e_id %>/instructions/<%= x %>/<%= y %>">&nbsp<%= p_c %>&nbsp</a>
+                      <a style="color:<%= color %>;text-decoration:none;" href="/engines/<%= e_id %>/instructions/<%= x %>/<%= y %>"><%= p_c %></a>
                     <% elsif pistons.size < 10 %>
-                      <a style="color:<%= color %>;text-decoration:none;" href="/engines/<%= e_id %>/instructions/<%= x %>/<%= y %>">&nbsp<%= pistons.size %>&nbsp</a>
+                      <a style="color:<%= color %>;text-decoration:none;" href="/engines/<%= e_id %>/instructions/<%= x %>/<%= y %>"><%= pistons.size %></a>
                     <% else %>
-                      <a style="color:<%= color %>;text-decoration:none;" href="/engines/<%= e_id %>/instructions/<%= x %>/<%= y %>">&nbsp+&nbsp</a>                  
+                      <a style="color:<%= color %>;text-decoration:none;" href="/engines/<%= e_id %>/instructions/<%= x %>/<%= y %>">+</a>                  
                     <% end %>  
                 <% else %>
-                    <a style="color:<%= color %>;text-decoration:none;" href="/engines/<%= e_id %>/instructions/<%= x %>/<%= y %>">&nbsp&nbsp&nbsp&nbsp</a>              
+                    <a style="color:<%= color %>;text-decoration:none;" href="/engines/<%= e_id %>/instructions/<%= x %>/<%= y %>">&nbsp&nbsp</a>              
                 <% end %>  
                 </td> 
             <% end %>
@@ -66,19 +66,34 @@
         </table>
       </div>
     </div>
-    
-    <form action="/engines/<%= e_id %>/next" method="post">
-      <p>Cycles: <input name="cycles" type="number" value="1"></input></p>
-      <input type="submit" value="Go!">
-    </form>
-
-    <% run_text = (running ? "STOP" : "PLAY") %>
-    <% run_url = (running ? "/engines/#{e_id}/stop" : "/engines/#{e_id}/play") %>
-    <a href="/zoom/in"> ZOOM+ </a>&nbsp&nbsp&nbsp&nbsp<a href="/zoom/out"> ZOOM- </a>
-    <br>
-    <a href="<%= run_url %>"> <%= run_text %> </a>&nbsp&nbsp&nbsp&nbsp<a href="/engines/<%= e_id %>/reset"> RESET </a>
-    <br>
-    <br>
-    <%= engine.output %>
+    <% play_text = (running ? "STOP" : "PLAY") %>
+    <% play_url = (running ? "/engines/#{e_id}/stop" : "/engines/#{e_id}/play") %>
+    <table border="0">
+      <tr>
+        <td>
+          <form action="/zoom/in" method="get">
+            <input type=submit value="+"></input>
+          </form>
+        </td>
+        <td>
+          <form action="/zoom/out" method="get">
+            <input type=submit value="-"></input>
+          </form>
+        </td>
+        <td>
+          <form action="/engines/<%= e_id %>/next" method="post">  
+            Cycles: <input style="width:50px"name="cycles" type="number" value="1" width=50px></input>
+            <input type="submit" value="Go!">
+          </form>
+        </td>
+        <td>
+          <a href="<%= play_url %>"><%= play_text %></a>
+        </td>
+        <td>
+          <a href="/engines/<%= e_id %>/reset">RESET</a> 
+        </td>
+      </tr>
+    </table>
+    <p><%= engine.output %></p>
   </body>
 </html>
