@@ -32,7 +32,7 @@
             <tr>
             <% (0...engine.instructions.width).each do |x| %>
                 <% color = "##{engine.instructions[x, y].value.to_int_hex[2...8]}" %>
-                <td bgcolor="<%= color %>">
+                <td bgcolor="<%= color %>" width="20">
                 <% if !(pistons = engine.pistons.select {|p| p.position_x == x && p.position_y == y}).empty? %>
                     <% if color[1..2].to_i(16) > 0x77 %> 
                       <% color = "#000000" %> 
