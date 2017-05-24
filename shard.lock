@@ -14,7 +14,7 @@ shards:
 
   pixel_lang_crystal:
     github: redcodefinal/pixel_lang_crystal
-    commit: 5c11f05abc3ce7716e54ebee6c4680ba2a1a1c3b
+    commit: ea838c7ed905ed9f70be2a2c6222dad005823155
 
   radix:
     github: luislavena/radix
@@ -22,7 +22,7 @@ shards:
 
   stumpy_core:
     git: https://github.com/l3kn/stumpy_core.git
-    commit: 8f9390d3476e19e2a7c0fa6622b2c1092892bfb3
+    commit: 06b506d72c7fcda3ac596618f01602f83fdf054d
 
   stumpy_png:
     github: l3kn/stumpy_png

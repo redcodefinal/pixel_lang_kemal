@@ -9,18 +9,27 @@
         <tr>
           <td><b>Name</b></td>
           <td><b>Cycles</b></td>
+          <td><b>Output</b></td>
         </tr>
-        <% engines.each_with_index do |e, i| %>
+        <% engines.each do |i, e| %>
           <tr>
-            <td><a href="/engines/<%= i %>"><%= e.name %></a></td>
+            <td><a href="/engines/<%= i %>"><%= i %></a></td>
             <td><%= e.cycles %></td>
+            <td><%= e.output %></td>
+            <td><a href="/engines/<%= i %>/reset">RESET</a></td>
+            <td><a href="/engines/<%= i %>/run">RUN</a></td>
+            <td><form action="/engines/<%= i %>/delete" method="get"><input type="submit" value="delete"></form></td>
           </tr>
         <% end %>
     </table>
-
+    <br>
+    <br>
+    <br>
     <form action="/engines/new" method="post">
-      <input name="name" type="text"></input>
-      <input name="input" type="text"></input>
+      <b>NEW ENGINE</b>
+      <br>
+      <p>Name: <input name="program_name" type="text"></input></p>
+      <p>Input: <input name="input" type="text"></input></p>
       <select name="program">
         <% Programs.to_a.each do |program| %>
           <option value="<%= program %>"><%= program.split('/').last.split('.').first %></option>

@@ -3,7 +3,7 @@
     <title>pixel_lang engine, <%= engine.name %>[<%= x %>, <%= y %>]</title>
   </head>
   <body>
-    <a href="/">Home</a>
+    <a href="<%= env.request.headers["Referer"] %>">Back</a>
     <br>
     <table border="1">
       <tr>
@@ -17,6 +17,47 @@
           <td><%= row[1] %></td>          
         </tr>
       <% end %>
+    </table>
+
+    <h1> Current Pistons </h1>
+    <table border="1">
+      <tr>
+      <% pistons.each do |p| %>
+        <td>
+          INFO:
+          <table border="1">
+            <% p.info.each do |i|%>
+              <tr>
+                <td><%= i[0] %></td>
+                <td><%= i[1] %></td>
+              </tr>
+            <% end %>
+          </table>
+
+          REGISTERS:
+          <table border="1">
+            <% p.registers.each do |i|%>
+              <tr>
+                <td><%= i[0] %></td>
+                <td><%= i[1] %></td>
+                <td><%= i[2] %></td>                
+              </tr>
+            <% end %>
+          </table>
+
+          MEMORY:
+          <table border="1">
+            <% p.memory_dump.each do |i|%>
+              <tr>
+                <td><%= i[0] %></td>
+                <td><%= i[1] %></td>
+                <td><%= i[2] %></td>                
+              </tr>
+            <% end %>
+          </table>
+        </td>
+      <% end %>
+      </tr>
     </table>
   </body>
 </html>
