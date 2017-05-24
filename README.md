@@ -13,6 +13,18 @@ or
 Pick a program, name it, type an input, click submit.
 You can then open your newly created engine and play around.
 
+Some programs need an input to work properly, but will run without.
+
+basic --> calculator: Takes an expression (like 20+10 or 30-30 no spaces)
+basic --> counter: Takes a number
+basic --> fizzbuzz: Takes a number
+basic --> fizzbuzz_art: Takes a number
+basic --> fork_counter: Takes a number
+
+math --> fibonacci: Takes a number
+math --> fibonacci_art: Takes a number
+
+
 ## Development
 
 Fork it nerd
