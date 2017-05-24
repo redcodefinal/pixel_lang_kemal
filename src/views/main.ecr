@@ -31,8 +31,10 @@
       <p>Name: <input name="program_name" type="text"></input></p>
       <p>Input: <input name="input" type="text"></input></p>
       <select name="program">
-        <% Programs.to_a.each do |program| %>
-          <option value="<%= program %>"><%= program.split('/').last.split('.').first %></option>
+        <% Programs.keys.sort.each do |category| %>
+          <% Programs[category].sort{|a,b| a.split('/').last.split('.').first <=> b.split('/').last.split('.').first}.each do |program| %>
+            <option value="<%= program %>"><%= category + " --> " + program.split('/').last.split('.').first %></option>
+          <% end %>
         <% end %>
       </select>
       <input type="submit" value="Submit">

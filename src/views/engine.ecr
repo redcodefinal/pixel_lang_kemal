@@ -50,14 +50,14 @@
                       <% elsif pistons[0].direction == :right %>
                         <% p_c = ">" %>
                       <% end %>
-                      <a style="color:<%= color %>;text-decoration:none;" href="/engines/<%= e_id %>/instructions/<%= x %>/<%= y %>"><%= p_c %></a>
+                      <center><a style="color:<%= color %>;text-decoration:none;" href="/engines/<%= e_id %>/instructions/<%= x %>/<%= y %>"><%= p_c %></a></center>
                     <% elsif pistons.size < 10 %>
-                      <a style="color:<%= color %>;text-decoration:none;" href="/engines/<%= e_id %>/instructions/<%= x %>/<%= y %>"><%= pistons.size %></a>
+                      <center><a style="color:<%= color %>;text-decoration:none;" href="/engines/<%= e_id %>/instructions/<%= x %>/<%= y %>"><%= pistons.size %></a></center>
                     <% else %>
-                      <a style="color:<%= color %>;text-decoration:none;" href="/engines/<%= e_id %>/instructions/<%= x %>/<%= y %>">+</a>                  
+                      <center><a style="color:<%= color %>;text-decoration:none;" href="/engines/<%= e_id %>/instructions/<%= x %>/<%= y %>">+</a></center>
                     <% end %>  
                 <% else %>
-                    <a style="color:<%= color %>;text-decoration:none;" href="/engines/<%= e_id %>/instructions/<%= x %>/<%= y %>">&nbsp&nbsp</a>              
+                    <center><a style="color:<%= color %>;text-decoration:none;" href="/engines/<%= e_id %>/instructions/<%= x %>/<%= y %>">&nbsp&nbsp</a></center>
                 <% end %>  
                 </td> 
             <% end %>

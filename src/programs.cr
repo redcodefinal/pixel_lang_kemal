@@ -1,10 +1,17 @@
 module Programs
-  @@programs = [] of String
+  @@programs = {} of String => Array(String)
 
   def self.load
     dir = "./public/programs/"
-    Dir.entries(dir).each do |file|
-      @@programs << dir + file unless File.directory?(dir + file)
+    Dir.entries(dir).each do |entry|
+      if File.directory?(dir + entry)     
+        next if entry[0] == '.'
+        @@programs[entry] = [] of String 
+        Dir.entries(dir + entry).each do |file|
+          next if file[0] == '.'
+          @@programs[entry] << dir + entry + '/' + file
+        end
+      end
     end
   end
 
@@ -12,7 +19,7 @@ module Programs
     @@programs[index]
   end
 
-  def self.to_a
-    @@programs
+  def self.keys
+    @@programs.keys
   end
 end

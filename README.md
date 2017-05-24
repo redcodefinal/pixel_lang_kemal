@@ -1,18 +1,21 @@
 # pixel_lang_kemal
 
-TODO: Write a description here
+Runs the pixel_lang esoteric language
 
 ## Installation
 
-TODO: Write installation instructions here
+`shards build && ./bin/pixel_lang_kemal`
+or
+`crystal run ./src/app.cr`
 
 ## Usage
 
-TODO: Write usage instructions here
+Pick a program, name it, type an input, click submit.
+You can then open your newly created engine and play around.
 
 ## Development
 
-TODO: Write development instructions here
+Fork it nerd
 
 ## Contributing
 
@@ -24,4 +27,4 @@ TODO: Write development instructions here
 
 ## Contributors
 
-- [[your-github-name]](https://github.com/[your-github-name]) Ian Rash - creator, maintainer
+- [redcodefinal](https://github.com/redcodefinal) Ian Rash - creator, maintainer

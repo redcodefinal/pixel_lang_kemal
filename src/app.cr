@@ -3,11 +3,11 @@ require "pixel_lang_crystal"
 require "./programs"
 
 engines = {} of String => AutoEngine
-
+engines["hello_world"] = AutoEngine.new("hello_world", "./public/programs/basic/hello_world.png")
 Programs.load
 
 running = false
-ZOOMS = [0.075, 0.125, 0.15, 0.2, 0.25, 0.3, 0.4, 0.5, 0.65, 0.75, 0.85, 1.0, 1.25, 1.5, 1.75, 2.0, 2.5, 3.0, 3.5, 4.0]
+ZOOMS = [0.075, 0.125, 0.15, 0.2, 0.25, 0.3, 0.4, 0.5, 0.65, 0.75, 0.85, 1.0, 1.25, 1.5, 1.75, 2.0, 2.5, 3.0, 3.5, 4.0, 5.0]
 zoom = 1.0
 
 get "/" do
