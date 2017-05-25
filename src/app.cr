@@ -125,10 +125,4 @@ get "/engines/:e_id/instructions/:x/:y" do |env|
   render "src/views/instruction.ecr"
 end
 
-get "/engines/:e_id/pistons" do
-end
-
-get "/engines/:e_id/pistons/:p_id" do
-end
-
 Kemal.run
