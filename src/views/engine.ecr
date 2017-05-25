@@ -1,12 +1,20 @@
 <html>
   <head>
+    <% cell_size = "30px" %>
     <title>pixel_lang engine, <%= engine.name %></title>
+    <!-- Enables zooming -->
     <style>
-      table td a {
+      #celllink {
         display: block;
-        height: 100%;        
-        width: 100%;
+        height: <%= cell_size %>;        
+        width: <%= cell_size %>;
       }
+
+      #cell {
+        height: <%= cell_size %>;
+        width: <%= cell_size %>;
+      }
+
       #wrap { width: 800px; height: 500px; padding: 0; overflow: auto; }
       #zoom {
           -ms-zoom: <%= zoom %>;
@@ -18,21 +26,24 @@
           -webkit-transform-origin: 0 0;
       }
     </style>
-    <% if running %>
+    <!-- If this engine is playing (the user clicked the PLAY button) begin refreshing the page -->
+    <% if playing %>
       <meta http-equiv="refresh" content="1">
     <% end %>
   </head>
   <body>
     <a href="/">Home</a>
     <br>
+    <!-- Draws the board in a scrollable, zoomable div -->
     <div id="wrap">
       <div id="zoom">
         <table border="0" cellspacing="0" cellpadding="0" style="table-layout:fixed">
           <% (0...engine.instructions.height).each do |y| %>
             <tr>
             <% (0...engine.instructions.width).each do |x| %>
-                <% color = "##{engine.instructions[x, y].value.to_int_hex[2...8]}" %>
-                <td bgcolor="<%= color %>" width="20">
+                <% color = "##{engine.instructions[x, y].value.value.to_s 16}" %>
+                <td id="cell" bgcolor="<%= color %>">
+                <% #Render a marker if there are pistons on this instruction %>
                 <% if !(pistons = engine.pistons.select {|p| p.position_x == x && p.position_y == y}).empty? %>
                     <% if color[1..2].to_i(16) > 0x77 %> 
                       <% color = "#000000" %> 
@@ -50,24 +61,24 @@
                       <% elsif pistons[0].direction == :right %>
                         <% p_c = ">" %>
                       <% end %>
-                      <center><a style="color:<%= color %>;text-decoration:none;" href="/engines/<%= e_id %>/instructions/<%= x %>/<%= y %>"><%= p_c %></a></center>
+                      <center><a id="cell_link" style="color:<%= color %>;text-decoration:none;" href="/engines/<%= e_id %>/instructions/<%= x %>/<%= y %>"><%= p_c %></a></center>
                     <% elsif pistons.size < 10 %>
-                      <center><a style="color:<%= color %>;text-decoration:none;" href="/engines/<%= e_id %>/instructions/<%= x %>/<%= y %>"><%= pistons.size %></a></center>
+                      <center><a id="cell_link" style="color:<%= color %>;text-decoration:none;" href="/engines/<%= e_id %>/instructions/<%= x %>/<%= y %>"><%= pistons.size %></a></center>
                     <% else %>
-                      <center><a style="color:<%= color %>;text-decoration:none;" href="/engines/<%= e_id %>/instructions/<%= x %>/<%= y %>">+</a></center>
+                      <center><a id="cell_link" style="color:<%= color %>;text-decoration:none;" href="/engines/<%= e_id %>/instructions/<%= x %>/<%= y %>">+</a></center>
                     <% end %>  
                 <% else %>
-                    <center><a style="color:<%= color %>;text-decoration:none;" href="/engines/<%= e_id %>/instructions/<%= x %>/<%= y %>">&nbsp&nbsp</a></center>
+                    <center><a id="cell_link" style="color:<%= color %>;text-decoration:none;" href="/engines/<%= e_id %>/instructions/<%= x %>/<%= y %>">&nbsp</a></center>
                 <% end %>  
                 </td> 
             <% end %>
-            <tr>
+            </tr>
           <% end %>
         </table>
       </div>
     </div>
-    <% play_text = (running ? "STOP" : "PLAY") %>
-    <% play_url = (running ? "/engines/#{e_id}/stop" : "/engines/#{e_id}/play") %>
+    <% play_text = (playing ? "STOP" : "PLAY") %>
+    <% play_url = (playing ? "/engines/#{e_id}/stop" : "/engines/#{e_id}/play") %>
     <table border="0">
       <tr>
         <td>

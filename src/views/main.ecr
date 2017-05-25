@@ -5,6 +5,7 @@
   <body>
     <a href="/">Home</a>
     <br>
+    <!-- Displays the currently running engines -->
     <table border="1">
         <tr>
           <td><b>Name</b></td>
@@ -31,6 +32,7 @@
       <p>Name: <input name="program_name" type="text"></input></p>
       <p>Input: <input name="input" type="text"></input></p>
       <select name="program">
+        <!-- Goes through each program in Programs and creates options for them in the select -->
         <% Programs.keys.sort.each do |category| %>
           <% Programs[category].sort{|a,b| a.split('/').last.split('.').first <=> b.split('/').last.split('.').first}.each do |program| %>
             <option value="<%= program %>"><%= category + " --> " + program.split('/').last.split('.').first %></option>

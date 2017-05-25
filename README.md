@@ -15,7 +15,7 @@ You can then open your newly created engine and play around.
 
 Some programs need an input to work properly, but will run without.
 
-basic --> calculator: Takes an expression (like 20+10 or 30-30 no spaces)
+basic --> calculator: Takes an expression (like 20+10 and 30*30+40 no spaces, runs each operation from left to right)
 
 basic --> counter: Takes a number
 
