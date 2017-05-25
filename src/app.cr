@@ -4,7 +4,7 @@ require "./programs"
 
 engines = {} of String => AutoEngine
 engines["hello_world"] = AutoEngine.new("hello_world", "./public/programs/basic/hello_world.png")
-engines["euler_1"] = AutoEngine.new("euler_1", "./public/programs/euler/1.png", "1000")
+engines["euler_2"] = AutoEngine.new("euler_2", "./public/programs/euler/2.png", "10")
 
 Programs.load
 
