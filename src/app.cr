@@ -17,7 +17,7 @@ zoom = 1.0
 # Displays main page
 get "/" do
   playing = false
-  render "src/views/main.ecr"
+  render "src/views/main.ecr", "src/views/layout.ecr"
 end
 
 # Zooms in, then returns to sender
@@ -25,7 +25,6 @@ get "/zoom/in" do |env|
   playing = false
   zoom_i = ZOOMS.index(zoom).as(Int32)
   zoom = ZOOMS[zoom_i+1] unless zoom_i == ZOOMS.size-1
-  puts zoom
   env.redirect env.request.headers["Referer"]
 end
 
@@ -34,7 +33,6 @@ get "/zoom/out" do |env|
   playing = false
   zoom_i = ZOOMS.index(zoom).as(Int32)
   zoom = ZOOMS[zoom_i-1] unless zoom_i == 0
-  puts zoom
   env.redirect env.request.headers["Referer"]
 end
 
@@ -43,11 +41,7 @@ end
 get "/engines/:e_id" do |env|
   e_id = env.params.url["e_id"]
   engine = engines[e_id]
-  if playing
-    playing = false if engine.ended?
-    engine.run_one_instruction
-  end
-  render "src/views/engine.ecr"
+  render "src/views/engine.ecr", "src/views/layout.ecr"
 end
 
 # Deletes an engine then, returns to sender.
@@ -108,10 +102,11 @@ post "/engines/new" do |env|
   playing = false
   program_name = env.params.body["program_name"]
   if program_name == ""
-    env.redirect "/"
+    env.redirect env.request.headers["Referer"]
+  else
+    engines[program_name] = AutoEngine.new program_name, env.params.body["program"], env.params.body["input"]
+    env.redirect env.request.headers["Referer"]
   end  
-  engines[program_name] = AutoEngine.new program_name, env.params.body["program"], env.params.body["input"]
-  env.redirect env.request.headers["Referer"]
 end
 
 # Displays an instruction, and the current pistons on that instruction.
@@ -125,4 +120,28 @@ get "/engines/:e_id/instructions/:x/:y" do |env|
   render "src/views/instruction.ecr"
 end
 
+get "/engines/:e_id/instructions" do |env|
+  e_id = env.params.url["e_id"]
+  engine = engines[e_id]
+  if playing
+    if engine.ended?
+      playing = false
+    else
+      engine.run_one_instruction
+    end
+  end
+  render "src/views/reuse/instructions.ecr"
+end
+
+get "/engines/:e_id/output" do |env|
+  e_id = env.params.url["e_id"]
+  engine = engines[e_id]
+  engine.output
+end
+
+get "/engines/:e_id/ended" do |env|
+  e_id = env.params.url["e_id"]
+  engine = engines[e_id]
+  engine.ended?.to_s
+end
 Kemal.run

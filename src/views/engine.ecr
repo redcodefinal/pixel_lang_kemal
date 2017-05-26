@@ -1,83 +1,46 @@
-<html>
-  <head>
-    <% cell_size = "30px" %>
-    <title>pixel_lang engine, <%= engine.name %></title>
-    <!-- Enables zooming -->
-    <style>
-      #celllink {
-        display: block;
-        height: <%= cell_size %>;        
-        width: <%= cell_size %>;
-      }
+<!-- Draws the board in a scrollable, zoomable div -->
 
-      #cell {
-        height: <%= cell_size %>;
-        width: <%= cell_size %>;
-      }
+<!-- If this engine is playing (the user clicked the PLAY button) begin refreshing the page -->
+<% if playing %>
+  <% refresh_time = "350" %>
+<script>
+  var ended = "false";
+  f = function(){
+    $('#instructions').load('/engines/<%= e_id %>/instructions');
+    $('#output').load('/engines/<%= e_id %>/output');
+  };
 
-      #wrap { width: 800px; height: 500px; padding: 0; overflow: auto; }
-      #zoom {
-          -ms-zoom: <%= zoom %>;
-          -moz-transform: scale(<%= zoom %>);
-          -moz-transform-origin: 0 0;
-          -o-transform: scale(<%= zoom %>);
-          -o-transform-origin: 0 0;
-          -webkit-transform: scale(<%= zoom %>);
-          -webkit-transform-origin: 0 0;
-      }
-    </style>
-    <!-- If this engine is playing (the user clicked the PLAY button) begin refreshing the page -->
-    <% if playing %>
-      <meta http-equiv="refresh" content="1">
-    <% end %>
-  </head>
-  <body>
-    <a href="/">Home</a>
-    <br>
-    <!-- Draws the board in a scrollable, zoomable div -->
+  s = function() {
+    $.ajax({
+      url:'/engines/<%= e_id %>/ended',
+      type:'GET',
+      success: function(data){ended = data}
+    });
+    if (ended == "true") {
+      window.location.reload();
+    }
+  }
+  i = function() { 
+    setInterval(f, <%= refresh_time %>);
+    setInterval(s, <%= refresh_time %>); 
+  };
+  setTimeout(i, 100);
+</script>  
+<% end %>
+<center>
+  <div style="width:75%" class="w3-container">
     <table>
       <tr>
-        <td>
+        <td class="w3-white">
           <div id="wrap">
             <div id="zoom">
-              <table border="0" cellspacing="0" cellpadding="0" style="table-layout:fixed">
-                <% (0...engine.instructions.height).each do |y| %>
-                  <tr>
-                  <% (0...engine.instructions.width).each do |x| %>
-                      <% color = "##{engine.instructions[x, y].value.value.to_s 16}" %>
-                      <td id="cell" bgcolor="<%= color %>">
-                      <% #Render a marker if there are pistons on this instruction %>
-                      <% if !(pistons = engine.pistons.select {|p| p.position_x == x && p.position_y == y}).empty? %>
-                          <% if color[1..2].to_i(16) > 0x77 %> 
-                            <% color = "#000000" %> 
-                          <% else %> 
-                            <% color = "#FFFFFF" %> 
-                          <% end %>
-                          <% if pistons.size == 1 %>
-                            <% p_c = "?" %>
-                            <% if pistons[0].direction == :up %>
-                              <% p_c = "^" %>
-                            <% elsif pistons[0].direction == :down %>
-                              <% p_c = "v" %>
-                            <% elsif pistons[0].direction == :left %>
-                              <% p_c = "<" %>
-                            <% elsif pistons[0].direction == :right %>
-                              <% p_c = ">" %>
-                            <% end %>
-                            <center><a id="cell_link" style="color:<%= color %>;text-decoration:none;" href="/engines/<%= e_id %>/instructions/<%= x %>/<%= y %>"><%= p_c %></a></center>
-                          <% elsif pistons.size < 10 %>
-                            <center><a id="cell_link" style="color:<%= color %>;text-decoration:none;" href="/engines/<%= e_id %>/instructions/<%= x %>/<%= y %>"><%= pistons.size %></a></center>
-                          <% else %>
-                            <center><a id="cell_link" style="color:<%= color %>;text-decoration:none;" href="/engines/<%= e_id %>/instructions/<%= x %>/<%= y %>">+</a></center>
-                          <% end %>  
-                      <% else %>
-                          <center><a id="cell_link" style="color:<%= color %>;text-decoration:none;" href="/engines/<%= e_id %>/instructions/<%= x %>/<%= y %>">&nbsp&nbsp&nbsp&nbsp</a></center>
-                      <% end %>  
-                      </td> 
-                  <% end %>
-                  </tr>
-                <% end %>
-              </table>
+              <!-- draw instructions -->
+              <% if playing %>
+                <div id="instructions">
+                </div>
+              <% else %>
+                <%= render "src/views/reuse/instructions.ecr" %>
+              <% end %>  
             </div>
           </div>
         </td>
@@ -93,34 +56,11 @@
         </td>
       </tr>
     </table>
-    <% play_text = (playing ? "STOP" : "PLAY") %>
-    <% play_url = (playing ? "/engines/#{e_id}/stop" : "/engines/#{e_id}/play") %>
-    <table border="0">
-      <tr>
-        <td>
-          <form action="/zoom/in" method="get">
-            <input type=submit value="+"></input>
-          </form>
-        </td>
-        <td>
-          <form action="/zoom/out" method="get">
-            <input type=submit value="-"></input>
-          </form>
-        </td>
-        <td>
-          <form action="/engines/<%= e_id %>/next" method="post">  
-            Cycles: <input style="width:50px"name="cycles" type="number" value="1" width=50px></input>
-            <input type="submit" value="Go!">
-          </form>
-        </td>
-        <td>
-          <a href="<%= play_url %>"><%= play_text %></a>
-        </td>
-        <td>
-          <a href="/engines/<%= e_id %>/reset">RESET</a> 
-        </td>
-      </tr>
-    </table>
-    <p><%= engine.output %></p>
-  </body>
-</html>
+    <p><%= render "src/views/reuse/engine_control_panel.ecr" %></p>
+    <div align="left"><code id="output" class="w3-code">
+      <% if !playing %>
+        <%= engine.output %>
+      <% end %>
+    </code></div>
+  </div>
+</center>
