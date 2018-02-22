@@ -6,25 +6,25 @@ shards:
 
   kemal:
     github: kemalcr/kemal
-    version: 0.19.0
+    version: 0.22.0
 
   kilt:
     github: jeromegn/kilt
-    version: 0.3.3
+    version: 0.4.0
 
   pixel_lang_crystal:
     github: redcodefinal/pixel_lang_crystal
-    commit: 052b5aef6069d429d8d0940e52d382b83397b0b2
+    commit: dfa23cf8ea86a692bb8bd64f19fb3f9a7284c927
 
   radix:
     github: luislavena/radix
     version: 0.3.8
 
   stumpy_core:
-    git: https://github.com/l3kn/stumpy_core.git
-    commit: 06b506d72c7fcda3ac596618f01602f83fdf054d
+    github: stumpycr/stumpy_core
+    version: 1.8.2
 
   stumpy_png:
     github: l3kn/stumpy_png
-    version: 4.1.1
+    version: 4.2.2
 

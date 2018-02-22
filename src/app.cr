@@ -116,7 +116,7 @@ get "/engines/:e_id/instructions/:x/:y" do |env|
   y = env.params.url["y"].to_i
   e_id = env.params.url["e_id"]
   engine = engines[e_id]
-  pistons = engine.pistons.select {|p| p.position_x == x && p.position_y == y}
+  pistons = engine.pistons.select {|p| p.x == x && p.y == y}
   render "src/views/instruction.ecr"
 end
 

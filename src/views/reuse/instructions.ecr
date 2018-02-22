@@ -5,7 +5,7 @@
         <% color = "##{engine.instructions[x, y].value.value.to_s 16}" %>
           <td id="cell" bgcolor="<%= color %>">
             <% #Render a marker if there are pistons on this instruction %>
-            <% if !(pistons = engine.pistons.select {|p| p.position_x == x && p.position_y == y}).empty? %>
+            <% if !(pistons = engine.pistons.select {|p| p.x == x && p.y == y}).empty? %>
               <% if color[1..2].to_i(16) > 0x77 %> 
                 <% color = "#000000" %> 
               <% else %> 
