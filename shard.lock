@@ -14,7 +14,7 @@ shards:
 
   pixel_lang_crystal:
     github: redcodefinal/pixel_lang_crystal
-    commit: dfa23cf8ea86a692bb8bd64f19fb3f9a7284c927
+    commit: 5692e9bcfe4b52aa0244257f978afd15561ac6c7
 
   radix:
     github: luislavena/radix

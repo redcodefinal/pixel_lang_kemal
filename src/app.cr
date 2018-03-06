@@ -59,7 +59,7 @@ post "/engines/:e_id/next" do |env|
   e_id = env.params.url["e_id"]
   cycles = env.params.body["cycles"].to_i
   engine = engines[e_id]
-  cycles.times {engine.run_one_instruction}
+  cycles.times {engine.step}
   env.redirect env.request.headers["Referer"]
 end
 
@@ -81,7 +81,7 @@ get "/engines/:e_id/run" do |env|
   env.redirect env.request.headers["Referer"]
 end
 
-# Begins playing the engine, enabling auto refresh and performing run_one_instruction, then returns to sender
+# Begins playing the engine, enabling auto refresh and performing step, then returns to sender
 get "/engines/:e_id/play" do |env|
   e_id = env.params.url["e_id"]
   engine = engines[e_id]
@@ -89,7 +89,7 @@ get "/engines/:e_id/play" do |env|
   env.redirect env.request.headers["Referer"]
 end
 
-# Stops the engine from playing anymore, disabling auto refresh and run_one_instruction, then returns to sender.
+# Stops the engine from playing anymore, disabling auto refresh and step, then returns to sender.
 get "/engines/:e_id/stop" do |env|
   e_id = env.params.url["e_id"]
   engine = engines[e_id]
@@ -127,7 +127,7 @@ get "/engines/:e_id/instructions" do |env|
     if engine.ended?
       playing = false
     else
-      engine.run_one_instruction
+      engine.step
     end
   end
   render "src/views/reuse/instructions.ecr"
