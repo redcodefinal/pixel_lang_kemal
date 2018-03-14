@@ -1,9 +1,5 @@
 version: 1.0
 shards:
-  colorful:
-    github: icyleaf/colorful.cr
-    version: 0.1.0
-
   kemal:
     github: kemalcr/kemal
     version: 0.22.0
@@ -14,7 +10,7 @@ shards:
 
   pixel_lang_crystal:
     github: redcodefinal/pixel_lang_crystal
-    commit: 5692e9bcfe4b52aa0244257f978afd15561ac6c7
+    commit: 5da0ee0c95c2f609e5846ff791229d456763abb0
 
   radix:
     github: luislavena/radix
